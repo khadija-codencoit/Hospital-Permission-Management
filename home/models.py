@@ -11,8 +11,14 @@ class User(AbstractUser):
     role = models.CharField(max_length=20,choices=ROLES_CHOICES)
 
 class AdminProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User,relatrd_name="admin_user", on_delete=models.CASCADE)
     admin_code = models.CharField(max_length=200)
 
     def __str__(self):
         return self.user.username
+
+class DoctorProfile(models.Model):
+    user = models.OneToOneField(User,relatrd_name="doctor", on_delete=models.CASCADE)
+    specialization = models.CharField(max_length=100)
+    licance_number = models.CharField(max_length=100)
+    hospital_name = models.CharField(max_length=100)
