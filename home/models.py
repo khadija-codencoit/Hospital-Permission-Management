@@ -22,3 +22,8 @@ class DoctorProfile(models.Model):
     specialization = models.CharField(max_length=100)
     licance_number = models.CharField(max_length=100)
     hospital_name = models.CharField(max_length=100)
+
+class PaitentProfile(models.Model):
+    user = models.OneToOneField(User,relatrd_name="doctor", on_delete=models.CASCADE)
+    medical_history = models.TextField(null=True,Blank=True)
+    insurance_number = models.CharField(max_length = 100)
