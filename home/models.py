@@ -24,7 +24,7 @@ class DoctorProfile(models.Model):
     licance_number = models.CharField(max_length=100)
     hospital_name = models.CharField(max_length=100)
 
-class PaitentProfile(models.Model):
+class PatientProfile(models.Model):
     user = models.OneToOneField(User,relatrd_name="doctor", on_delete=models.CASCADE)
     medical_history = models.TextField(null=True,Blank=True)
     insurance_number = models.CharField(max_length = 100)
@@ -38,6 +38,20 @@ class StaffProfile(models.Model):
     def __str__(self):
         return self.user.username
 
-        
+
 def generate_number(*args, **kwargs):
     return str(uuid.uuid4()).split('-')[0].upper()
+
+class Appointment(models.Model):
+    appointment_number = models.CharField(
+        max_length=100,
+        unique=True,
+        default=generate_number
+    )
+    scheduled = models.DateTimeField()
+    remarks = models.CharField(max_length=255)
+    doctor = models.ForeignKey(DoctorProfile, on_delete=models.CASCADE)
+    patient = models.ForeignKey(PatientProfile, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.appointment_number
