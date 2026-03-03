@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, Group, Permission
+import uuid
 
 class User(AbstractUser):
     ROLES_CHOICES = [
@@ -36,3 +37,7 @@ class StaffProfile(models.Model):
 
     def __str__(self):
         return self.user.username
+
+        
+def generate_number(*args, **kwargs):
+    return str(uuid.uuid4()).split('-')[0].upper()
