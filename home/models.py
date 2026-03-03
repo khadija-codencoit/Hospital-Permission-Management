@@ -27,3 +27,12 @@ class PaitentProfile(models.Model):
     user = models.OneToOneField(User,relatrd_name="doctor", on_delete=models.CASCADE)
     medical_history = models.TextField(null=True,Blank=True)
     insurance_number = models.CharField(max_length = 100)
+
+class StaffProfile(models.Model):
+    user = models.OneToOneField(User, related_name="staff_profile", on_delete=models.CASCADE)
+    doctor = models.ForeignKey(DoctorProfile, on_delete=models.CASCADE)
+    employee_id = models.CharField(max_length=100, unique=True)
+    department = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.user.username
