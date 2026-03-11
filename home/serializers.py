@@ -34,3 +34,21 @@ class RegistrationSerializer(serializers.ModelSerializer):
         )
 
         return user
+    
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        feilds = ['id','username','email','role']
+
+        def to_representation(self,instance):
+            data = super().to_representation(instance)
+            if instance.role == 'admin':
+                data['profile'] = AdminProfile.objects.filter(user = instance).values().first()
+            elif instance.role == 'patient':
+                data['profile'] = DoctorProfile.objects.filter(user = instance).values().first()
+            elif instance.role == 'staff':
+                data['profile'] = PatientProfile.objects.filter(user = instance).values().first() 
+ 
+
+            return super().to_representation(instance)

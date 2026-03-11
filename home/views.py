@@ -12,8 +12,8 @@ class AuthViewSet(viewsets.ViewSet):
     def register(self,request):
         serializers = RegistrationSerializer(data = request.data)
         if serializers.is_valid():
-            serializers.save()
-            return Response()
+            user = serializers.save()
+            return Response(UserSerializer(user).data)
 
 
 
